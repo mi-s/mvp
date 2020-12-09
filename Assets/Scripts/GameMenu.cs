@@ -18,7 +18,7 @@ public class GameMenu : MonoBehaviour
     private int[] ownedItems; // Array with number of own shop items
 
     private bool inGame;  // True when player is playing minigame
-    public bool win;  // True when player won the previous minigame
+    public static bool win;  // True when player won the previous minigame
 
     private Text IncomeEquation;  // Used for efficient changing of income equation
     private Text Bananas;  // Used for efficient changing of banana display
