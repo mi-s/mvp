@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheckScript : MonoBehaviour
 {
     public GameObject gameHandler;
     private GraphScript graphScript;
+    public GameObject hint;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,15 +40,46 @@ public class CheckScript : MonoBehaviour
         List<(Vector2, Vector2)> lineSegments = lineSegmentSet.ToList();
         HashSet<Vector2> intersections = new HashSet<Vector2>();
         bool check = false;
+        bool hasOrigin = false;
         foreach((Vector2 p1, Vector2 p2) lineSegment in lineSegments)
         {
             if (lineSegment.p1.x == 0f && lineSegment.p1.y == 0f)
             {
+                hasOrigin = true;
                 check = recurse(lineSegment, lineSegments, intersections);
                 break;
             }
         }
         Debug.Log(check.ToString());
+        
+        if (!check)
+        {
+            if (lineSegments.Count == 0)
+            {
+                hint.GetComponent<Text>().text = "You must graph an equation";
+                hint.SetActive(true);
+            }
+            else if (lineSegments.Count == 1)
+            {
+                hint.GetComponent<Text>().text = "Hint: you can use more than one equation to create a path";
+                hint.SetActive(true);
+            }
+            else if (!hasOrigin)
+            {
+                hint.GetComponent<Text>().text = "Hint: your path should start from the origin (0,0)";
+                hint.SetActive(true);
+            }
+            else
+            {
+                hint.GetComponent<Text>().text = "Hint: the slope changes the steepness of the line and the intercept changes the height";
+                hint.SetActive(true);
+            }
+        }
+        else
+        {
+            hint.GetComponent<Text>().text = "Good Job!";
+            hint.SetActive(true);
+        }
         //return check;
     }
 

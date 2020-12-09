@@ -10,6 +10,7 @@ public class GraphScript : MonoBehaviour
     public GameObject interceptInput;
     public HashSet<(Vector2, Vector2)> lineSegments;
     public HashSet<(Vector2, Vector2)> obstacles;
+    public GameObject hint;
     void Awake()
     {
         lineSegments = new HashSet<(Vector2, Vector2)>();
@@ -32,8 +33,19 @@ public class GraphScript : MonoBehaviour
     {
         string mString = slopeInput.GetComponent<Text>().text;
         string bString = interceptInput.GetComponent<Text>().text;
-        float m = float.Parse(mString);
-        float b = float.Parse(bString);
+        float m, b;
+        try
+        {
+            m = float.Parse(mString);
+            b = float.Parse(bString);
+        }
+        catch (System.FormatException e)
+        {
+            hint.GetComponent<Text>().text = "Please input a slope and an intercept";
+            hint.SetActive(true);
+            return;
+        }
+        hint.SetActive(false);
         Vector2 p1 = new Vector2(0, b);
         Vector2 p2 = new Vector2(50, 50 * m + b);
         foreach ((Vector2 p3, Vector2 p4) obstacle in obstacles)
@@ -67,6 +79,14 @@ public class GraphScript : MonoBehaviour
         windowScript.CreateLine(new Vector2(0, 20), new Vector2(50, 20), 0.15f);
         windowScript.CreateLine(new Vector2(0, 30), new Vector2(50, 30), 0.15f);
         windowScript.CreateLine(new Vector2(0, 40), new Vector2(50, 40), 0.15f);
+
+        windowScript.CreateCircle(new Vector2(0, 0));
+        windowScript.CreateCircle(new Vector2(50, 50));
+
+        foreach ((Vector2 p1, Vector2 p2) lineSegment in obstacles)
+        {
+            windowScript.CreateLine(lineSegment.p1, lineSegment.p2, 1f);
+        }
 
         lineSegments = new HashSet<(Vector2, Vector2)>();
 

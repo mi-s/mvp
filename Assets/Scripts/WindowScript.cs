@@ -27,10 +27,11 @@ public class WindowScript : MonoBehaviour
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
+        gameObject.GetComponent<Image>().color = Color.magenta;
 
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = position;
-        rectTransform.sizeDelta = new Vector2(1, 1);
+        rectTransform.sizeDelta = new Vector2(1.5f, 1.5f);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
     }
