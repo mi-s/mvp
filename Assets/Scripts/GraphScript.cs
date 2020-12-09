@@ -80,8 +80,8 @@ public class GraphScript : MonoBehaviour
         windowScript.CreateLine(new Vector2(0, 30), new Vector2(50, 30), 0.15f);
         windowScript.CreateLine(new Vector2(0, 40), new Vector2(50, 40), 0.15f);
 
-        windowScript.CreateCircle(new Vector2(0, 0));
-        windowScript.CreateCircle(new Vector2(50, 50));
+        windowScript.CreateCircle(new Vector2(0, 0), Color.magenta);
+        windowScript.CreateCircle(new Vector2(50, 50), Color.magenta);
 
         foreach ((Vector2 p1, Vector2 p2) lineSegment in obstacles)
         {

@@ -14,7 +14,7 @@ public class LevelScript : MonoBehaviour
         windowScript = graphWindow.GetComponent<WindowScript>();
         graphScript = gameHandler.GetComponent<GraphScript>();
         //need logic here for which level to start
-        Level3();
+        Level4();
         Debug.Log(string.Join(",", graphScript.lineSegments));
     }
 
@@ -26,14 +26,14 @@ public class LevelScript : MonoBehaviour
 
     public void Level1()
     {
-        windowScript.CreateCircle(new Vector2(0, 0));
-        windowScript.CreateCircle(new Vector2(50, 50));
+        windowScript.CreateCircle(new Vector2(0, 0), Color.magenta);
+        windowScript.CreateCircle(new Vector2(50, 50), Color.magenta);
     }
 
     public void Level2()
     {
-        windowScript.CreateCircle(new Vector2(0, 0));
-        windowScript.CreateCircle(new Vector2(50, 50));
+        windowScript.CreateCircle(new Vector2(0, 0), Color.magenta);
+        windowScript.CreateCircle(new Vector2(50, 50), Color.magenta);
         Vector2 p0 = new Vector2(25, 20);
         Vector2 p1 = new Vector2(25, 30);
         windowScript.CreateLine(p0, p1, 1f);
@@ -42,8 +42,13 @@ public class LevelScript : MonoBehaviour
 
     public void Level3()
     {
-        windowScript.CreateCircle(new Vector2(0, 0));
-        windowScript.CreateCircle(new Vector2(50, 50));
+
+    }
+
+    public void Level4()
+    {
+        windowScript.CreateCircle(new Vector2(0, 0), Color.magenta);
+        windowScript.CreateCircle(new Vector2(50, 50), Color.magenta);
         Vector2 p0 = new Vector2(25, 10);
         Vector2 p1 = new Vector2(25, 30);
         Vector2 p2 = new Vector2(0, 40);

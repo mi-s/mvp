@@ -22,12 +22,12 @@ public class WindowScript : MonoBehaviour
         
     }
 
-    public void CreateCircle(Vector2 position)
+    public void CreateCircle(Vector2 position, Color color)
     {
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
-        gameObject.GetComponent<Image>().color = Color.magenta;
+        gameObject.GetComponent<Image>().color = color;
 
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = position;
