@@ -14,27 +14,13 @@ public class TutorialScript : MonoBehaviour
     {
         windowScript = graphWindow.GetComponent<WindowScript>();
         graphScript = gameHandler.GetComponent<GraphScript>();
-        Scene m_Scene = SceneManager.GetActiveScene();
-        string sceneName = m_Scene.name;
-        if (sceneName.Equals("MazeTutorial"))
-        {
-            MazeTutorial();
-        } else if (sceneName.Equals("MachineTutorial"))
-        {
-            MachineTutorial();
-        }
+        MachineTutorial();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-
-    public void MazeTutorial()
-    {
-        windowScript.CreateCircle(new Vector2(0, 0), Color.magenta);
-        windowScript.CreateCircle(new Vector2(50, 50), Color.magenta);
     }
 
     public void MachineTutorial()

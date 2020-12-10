@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BackButtonScript : MonoBehaviour
 {
-    public void Continue()
+    public void Continue(string scene)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.UnloadScene(scene);
     }
 }
