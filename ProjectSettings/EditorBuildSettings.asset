@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MachineMinigame.unity
     guid: 61cc566bfa43ecd49942ec8fd57ae877
+  - enabled: 1
+    path: Assets/Scenes/MachineTutorial.unity
+    guid: 6f2fc1eab771b4e409017f7dead2ac7d
+  - enabled: 1
+    path: Assets/Scenes/MazeTutorial.unity
+    guid: 03fb715fbe21c0849adece23586e8505
   m_configObjects: {}
