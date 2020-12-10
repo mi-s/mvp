@@ -10,6 +10,7 @@ public class CheckScript : MonoBehaviour
     public GameObject gameHandler;
     private GraphScript graphScript;
     public GameObject hint;
+    public GameObject winScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,10 +70,8 @@ public class CheckScript : MonoBehaviour
         }
         else
         {
-            hint.GetComponent<Text>().text = "Good Job!";
-            hint.SetActive(true);
             GameMenu.win = check;
-            SceneManager.LoadScene(0);
+            winScreen.SetActive(true);
         }
     }
 
@@ -119,10 +118,8 @@ public class CheckScript : MonoBehaviour
         }
         else
         {
-            hint.GetComponent<Text>().text = "Good Job!";
-            hint.SetActive(true);
             GameMenu.win = check;
-            SceneManager.LoadScene(0);
+            winScreen.SetActive(true);
         }
     }
 
