@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
@@ -17,8 +18,9 @@ public class GameMenu : MonoBehaviour
     private ShopItem[] items; // Array with shop items that can be bought
     private int[] ownedItems; // Array with number of own shop items
 
-    private bool inGame;  // True when player is playing minigame
     public static bool win;  // True when player won the previous minigame
+
+    int tutorialStage;  // From 1-9 = Tutorial, 10 = Done with tutorial
 
     private Text IncomeEquation;  // Used for efficient changing of income equation
     private Text Bananas;  // Used for efficient changing of banana display
@@ -46,6 +48,15 @@ public class GameMenu : MonoBehaviour
     private Image Factory3;
     private Image Factory4;
     private Image Factory5;
+    private Text Origin;
+    private Text TLCorner;
+    private Text TRCorner;
+    private Text BRCorner;
+    private Text Variables;
+    private GameObject Stage1;
+    private GameObject Stage2;
+
+    public WindowScript Ws;
 
     public class ShopItem
     {
@@ -72,6 +83,7 @@ public class GameMenu : MonoBehaviour
         b = 0;
         level = 0;
         gameLevel = 1;
+        win = false;
 
         IncomeEquation = GameObject.Find("IncomeEquation").GetComponent<Text>();
         Bananas = GameObject.Find("BananaCount").GetComponent<Text>();
@@ -99,6 +111,13 @@ public class GameMenu : MonoBehaviour
         Factory3 = GameObject.Find("Factory 3").GetComponent<Image>();
         Factory4 = GameObject.Find("Factory 4").GetComponent<Image>();
         Factory5 = GameObject.Find("Factory 5").GetComponent<Image>();
+        Origin = GameObject.Find("Origin").GetComponent<Text>();
+        BRCorner = GameObject.Find("BRCorner").GetComponent<Text>();
+        TRCorner = GameObject.Find("TRCorner").GetComponent<Text>();
+        TLCorner = GameObject.Find("TLCorner").GetComponent<Text>();
+        Variables = GameObject.Find("Variables").GetComponent<Text>();
+        Stage1 = GameObject.Find("Stage1");
+        Stage2 = GameObject.Find("Stage2");
 
         items = new ShopItem[3] {new ShopItem(), new ShopItem(), new ShopItem()};
         items[0].Cost = 1;
@@ -127,17 +146,44 @@ public class GameMenu : MonoBehaviour
         Factory3.enabled = false;
         Factory4.enabled = false;
         Factory5.enabled = false;
+
+        Ws.CreateLine(new Vector2(0, 0), new Vector2(200, 200), 1.5f);
+
+        // Square Grid
+        Ws.CreateLine(new Vector2(0, 0), new Vector2(0, 200), .65f);
+        Ws.CreateLine(new Vector2(0, 0), new Vector2(200, 0), .65f);
+        Ws.CreateLine(new Vector2(200, 0), new Vector2(200, 200), .65f);
+        Ws.CreateLine(new Vector2(0, 200), new Vector2(200, 200), .65f);
+
+        // Vertical Lines
+        Ws.CreateLine(new Vector2(50, 0), new Vector2(50, 200), .65f);
+        Ws.CreateLine(new Vector2(100, 0), new Vector2(100, 200), .65f);
+        Ws.CreateLine(new Vector2(150, 0), new Vector2(150, 200), .65f);
+
+        // Horizontal Lines
+        Ws.CreateLine(new Vector2(0, 50), new Vector2(200, 50), .65f);
+        Ws.CreateLine(new Vector2(0, 100), new Vector2(200, 100), .65f);
+        Ws.CreateLine(new Vector2(0, 150), new Vector2(200, 150), .65f);
     }
 
     // Update is called once per frame
-    void Update() {  UpdateUI(); }
-
-    // UpdateUI: Updates the UI (does not need to occur every frame)
-    private void UpdateUI()
-    {
+    void Update() 
+    {  
         if (m < 1 || b > 0) { return; }
 
-        string t1, t2, t3, t4, t5, t6, t7, t8;
+        if (win)
+        {
+            y += m;
+            win = false;
+        }
+
+        if (tutorialStage == 1)
+        {
+            Stage1.SetActive(false);
+            Stage2.SetActive(true);
+        }
+
+        string t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
 
         if (m == 1 && b == 0)
         {
@@ -195,8 +241,25 @@ public class GameMenu : MonoBehaviour
             Count2.text = t8;
         }
 
+        t9 = "(0, " + b + ")";
+        Origin.text = t9;
+
+        t10 = "(1, " + b + ")";
+        BRCorner.text = t10;
+
+        int newY = m + b;
+
+        t11 = "(0, " + newY + ")";
+        TLCorner.text = t11;
+
+        t12 = "(1, " + newY + ")";
+        TRCorner.text = t12;
+
+        t13 = "m = " + m + "   b = " + b;
+        Variables.text = t13;
+
         gameLevel = LevelDropdown.value;
-    }
+     }
 
     // Purchase the shop item at the given index (0, 1, 2) of the shop array
     public void Purchase(int index)
@@ -314,5 +377,52 @@ public class GameMenu : MonoBehaviour
         }
 
         level++;
+    }
+
+    // Plays the minigame of this current level
+    public void PlayGame()
+    {
+        if (level == 0)
+        {
+
+        }
+        else if (gameLevel == 1)
+        {
+
+        }
+        else if (gameLevel == 2)
+        {
+
+        }
+        else if (gameLevel == 3)
+        {
+
+        }
+    }
+
+    // Plays the tutorial for the given minigame
+    public void PlayTutorial()
+    {
+        if (level == 0)
+        {
+
+        }
+        else if (gameLevel == 1)
+        {
+
+        }
+        else if (gameLevel == 2)
+        {
+
+        }
+        else if (gameLevel == 3)
+        {
+
+        }
+    }
+
+    public void IncreaseTutorialStage()
+    {
+        tutorialStage++;
     }
 }
