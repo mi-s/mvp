@@ -200,7 +200,7 @@ public class GameMenu : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
@@ -273,9 +273,13 @@ public class GameMenu : MonoBehaviour
             tutorialStage++;
         }
 
-        if (win)
+        if (win && realGame)
         {
             y += m;
+            win = false;
+        }
+        else if (win)
+        {
             win = false;
         }
 
@@ -487,21 +491,21 @@ public class GameMenu : MonoBehaviour
     {
         realGame = true;
 
-        if (level == 0)
+        if (gameLevel == 0)
         {
-
+            SceneManager.LoadScene("MazeMinigame");
         }
         else if (gameLevel == 1)
         {
-
+            SceneManager.LoadScene("MazeMinigame");
         }
         else if (gameLevel == 2)
         {
-
+            SceneManager.LoadScene("MachineMinigame");
         }
         else if (gameLevel == 3)
         {
-
+            SceneManager.LoadScene("MazeMinigame");
         }
     }
 
@@ -510,21 +514,21 @@ public class GameMenu : MonoBehaviour
     {
         realGame = false;
 
-        if (level == 0)
+        if (gameLevel == 0)
         {
-
+            SceneManager.LoadScene("MazeTutorial", LoadSceneMode.Additive);
         }
         else if (gameLevel == 1)
         {
-
+            SceneManager.LoadScene("MazeTutorial", LoadSceneMode.Additive);
         }
         else if (gameLevel == 2)
         {
-
+            SceneManager.LoadScene("MachineTutorial", LoadSceneMode.Additive);
         }
         else if (gameLevel == 3)
         {
-
+            SceneManager.LoadScene("MazeTutorial", LoadSceneMode.Additive);
         }
     }
 
