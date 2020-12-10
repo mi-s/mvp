@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LandingPage.unity
+    guid: 0e7d00d13602ba548b83d3b30d59fbf9
+  - enabled: 1
+    path: Assets/Scenes/MazeMinigame.unity
+    guid: 75341dcff620237429aea5673bb03195
+  - enabled: 1
+    path: Assets/Scenes/MachineMinigame.unity
+    guid: 61cc566bfa43ecd49942ec8fd57ae877
   m_configObjects: {}

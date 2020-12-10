@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CheckScript : MonoBehaviour
 {
@@ -70,8 +71,9 @@ public class CheckScript : MonoBehaviour
         {
             hint.GetComponent<Text>().text = "Good Job!";
             hint.SetActive(true);
+            GameMenu.win = check;
+            SceneManager.LoadScene(0);
         }
-        GameMenu.win = check;
     }
 
     public void Check()
@@ -119,8 +121,9 @@ public class CheckScript : MonoBehaviour
         {
             hint.GetComponent<Text>().text = "Good Job!";
             hint.SetActive(true);
+            GameMenu.win = check;
+            SceneManager.LoadScene(0);
         }
-        GameMenu.win = check;
     }
 
     private bool recurse((Vector2 p1, Vector2 p2) current, List<(Vector2, Vector2)> lineSegments, HashSet<Vector2> intersections)
