@@ -360,7 +360,7 @@ public class GameMenu : MonoBehaviour
         
         if (tutorialStage < 11)
         {
-            gameLevel = 0;
+            gameLevel = 2;
         }
         else
         {
