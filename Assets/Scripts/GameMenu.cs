@@ -12,7 +12,7 @@ public class GameMenu : MonoBehaviour
     private int b;  // Intercept of income equation
 
     private int level;  // 0 = Tutorial, 1-3 = Standard Levels
-    private int gameLevel; // Difficulty level of minigame chosen by player
+    public static int gameLevel; // Difficulty level of minigame chosen by player
 
     private ShopItem[] items; // Array with shop items that can be bought
     private int[] ownedItems; // Array with number of own shop items
