@@ -358,13 +358,13 @@ public class GameMenu : MonoBehaviour
         t13 = "m = " + m + "   b = " + b;
         Variables.text = t13;
         
-        if (tutorialStage < 11)
+        if (tutorialStage < 10)
         {
             gameLevel = 0;
         }
         else
         {
-            gameLevel = LevelDropdown.value;
+            gameLevel = LevelDropdown.value + 1;
         }
      }
 
@@ -491,6 +491,8 @@ public class GameMenu : MonoBehaviour
     {
         realGame = true;
 
+        Debug.Log(gameLevel);
+
         if (gameLevel == 0)
         {
             SceneManager.LoadScene("MazeMinigame", LoadSceneMode.Additive);
@@ -513,6 +515,8 @@ public class GameMenu : MonoBehaviour
     public void PlayTutorial()
     {
         realGame = false;
+
+        Debug.Log(gameLevel);
 
         if (gameLevel == 0)
         {
