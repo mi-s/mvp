@@ -8,13 +8,24 @@ public class GraphScript : MonoBehaviour
     public GameObject graphWindow;
     public GameObject slopeInput;
     public GameObject interceptInput;
+    public GameObject xInput;
+    public GameObject yInput;
     public HashSet<(Vector2, Vector2)> lineSegments;
     public HashSet<(Vector2, Vector2)> obstacles;
+
+    public HashSet<(Vector2, Vector2)> solutions;
+    public HashSet<(Vector2, Vector2, Color)> endpoints;
+    public HashSet<Vector2> solutionIntersections;
+    public HashSet<Vector2> intersections;
     public GameObject hint;
     void Awake()
     {
         lineSegments = new HashSet<(Vector2, Vector2)>();
         obstacles = new HashSet<(Vector2, Vector2)>();
+        solutions = new HashSet<(Vector2, Vector2)>();
+        endpoints = new HashSet<(Vector2, Vector2, Color)>();
+        solutionIntersections = new HashSet<Vector2>();
+        intersections = new HashSet<Vector2>();
         Debug.Log("created hashsets");
     }
     // Start is called before the first frame update
@@ -27,6 +38,52 @@ public class GraphScript : MonoBehaviour
     void Update()
     {
         
+    }
+    public void GraphMachine()
+    {
+        string mString = slopeInput.GetComponent<Text>().text;
+        string bString = interceptInput.GetComponent<Text>().text;
+        float m, b;
+        try
+        {
+            m = float.Parse(mString);
+            b = float.Parse(bString);
+        }
+        catch (System.FormatException e)
+        {
+            hint.GetComponent<Text>().text = "Please input a slope and an intercept";
+            hint.SetActive(true);
+            return;
+        }
+        hint.SetActive(false);
+        Vector2 p1 = new Vector2(0.0f, b);
+        Vector2 p2 = new Vector2(50.0f, 50 * m + b);
+        Debug.Log("p1: " + p1.x.ToString() + " " + p1.y.ToString());
+        Debug.Log("p2: " + p2.x.ToString() + " " + p2.y.ToString());
+        graphWindow.GetComponent<WindowScript>().CreateLine(p1, p2, 0.5f);
+        lineSegments.Add((p1, p2));
+        Debug.Log(string.Join(",", lineSegments));
+    }
+
+    public void Plot()
+    {
+        string xString = xInput.GetComponent<Text>().text;
+        string yString = yInput.GetComponent<Text>().text;
+        float x, y;
+        try
+        {
+            x = float.Parse(xString);
+            y = float.Parse(yString);
+        }
+        catch (System.FormatException e)
+        {
+            hint.GetComponent<Text>().text = "Please input x and y values";
+            hint.SetActive(true);
+            return;
+        }
+        Vector2 p = new Vector2(x, y);
+        graphWindow.GetComponent<WindowScript>().CreateCircle(p, Color.blue);
+        intersections.Add(p);
     }
 
     public void Graph()
@@ -61,6 +118,35 @@ public class GraphScript : MonoBehaviour
         Debug.Log(string.Join(",", lineSegments));
     }
 
+    public void ResetMachine()
+    {
+        Transform graphContainer = graphWindow.transform.Find("GraphContainer");
+        foreach (Transform child in graphContainer)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        WindowScript windowScript = graphWindow.GetComponent<WindowScript>();
+        windowScript.CreateLine(new Vector2(10, 0), new Vector2(10, 50), 0.15f);
+        windowScript.CreateLine(new Vector2(20, 0), new Vector2(20, 50), 0.15f); //0.1f doesn't work??
+        windowScript.CreateLine(new Vector2(30, 0), new Vector2(30, 50), 0.15f);
+        windowScript.CreateLine(new Vector2(40, 0), new Vector2(40, 50), 0.15f);
+
+        windowScript.CreateLine(new Vector2(0, 10), new Vector2(50, 10), 0.15f);
+        windowScript.CreateLine(new Vector2(0, 20), new Vector2(50, 20), 0.15f);
+        windowScript.CreateLine(new Vector2(0, 30), new Vector2(50, 30), 0.15f);
+        windowScript.CreateLine(new Vector2(0, 40), new Vector2(50, 40), 0.15f);
+
+        foreach ((Vector2 p1, Vector2 p2, Color c) endpoint in endpoints)
+        {
+            windowScript.CreateCircle(endpoint.p1, endpoint.c);
+            windowScript.CreateCircle(endpoint.p2, endpoint.c);
+        }
+
+        lineSegments = new HashSet<(Vector2, Vector2)>();
+
+    }
+
     public void Reset()
     {
         Transform graphContainer = graphWindow.transform.Find("GraphContainer");
@@ -89,8 +175,6 @@ public class GraphScript : MonoBehaviour
         }
 
         lineSegments = new HashSet<(Vector2, Vector2)>();
-
-        //need to reset level
 
     }
 

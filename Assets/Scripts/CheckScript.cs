@@ -12,19 +12,6 @@ public class CheckScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*Vector2 p0 = new Vector2(0, 0);
-        Vector2 p1 = new Vector2(75, 75);
-        Vector2 p2= new Vector2(25, 75);
-        Vector2 p3 = new Vector2(50, 50);
-        Vector2? p = GetIntersection(p0, p1, p2, p3);
-        if (p is Vector2 valueOfP)
-        {
-            Debug.Log(valueOfP.x.ToString() + " " + valueOfP.y.ToString());
-        }
-        else
-        {
-            Debug.Log("null");
-        }*/
         graphScript = gameHandler.GetComponent<GraphScript>();
     }
 
@@ -32,6 +19,59 @@ public class CheckScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private bool FloatEquals(float a, float b, float margin)
+    {
+        return System.Math.Abs(a - b) < margin;
+    }
+
+
+    public void CheckMachine()
+    {
+        HashSet<(Vector2, Vector2)> solutionSet = new HashSet<(Vector2, Vector2)>(graphScript.solutions);
+        HashSet<(Vector2, Vector2)> lineSegmentSet = graphScript.lineSegments;
+        List<(Vector2, Vector2)> lineSegments = lineSegmentSet.ToList();
+        bool check = false;
+        foreach ((Vector2 p1, Vector2 p2) lineSegment in lineSegments)
+        {
+            if (solutionSet.Contains(lineSegment))
+            {
+                solutionSet.Remove(lineSegment);
+            }
+        }
+        HashSet<Vector2> solutionIntersections = new HashSet<Vector2>(graphScript.solutionIntersections);
+        HashSet<Vector2> intersectionSet = graphScript.intersections;
+        List<Vector2> intersections = intersectionSet.ToList();
+        foreach (Vector2 p1 in intersections)
+        {
+            if (solutionIntersections.Contains(p1))
+            {
+                solutionIntersections.Remove(p1);
+            }
+        }
+
+        check = (solutionSet.Count == 0 && solutionIntersections.Count == 0);
+
+        if (!check)
+        {
+            if (solutionSet.Count != 0)
+            {
+                hint.GetComponent<Text>().text = "Hint: match the correct colors with each other";
+                hint.SetActive(true);
+            }
+            else if (solutionIntersections.Count != 0)
+            {
+                hint.GetComponent<Text>().text = "Hint: solve the system of equations on paper to find the intersections";
+                hint.SetActive(true);
+            }
+        }
+        else
+        {
+            hint.GetComponent<Text>().text = "Good Job!";
+            hint.SetActive(true);
+        }
+        GameMenu.win = check;
     }
 
     public void Check()

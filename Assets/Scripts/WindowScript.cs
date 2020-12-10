@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class WindowScript : MonoBehaviour
 {
-    [SerializeField] private Sprite circleSprite;
+    [SerializeField] public Sprite circleSprite;
     public RectTransform graphContainer;
     // Start is called before the first frame update
     void Start()
     {
         graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
-        //CreateCircle(new Vector2(0, 0));
-        //CreateCircle(new Vector2(20, 20));
-        //CreateLine(new Vector2(0, 0), new Vector2(20, 20), 1f);
     }
 
     // Update is called once per frame
