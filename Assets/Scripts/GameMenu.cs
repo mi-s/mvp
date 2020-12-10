@@ -18,6 +18,9 @@ public class GameMenu : MonoBehaviour
     private ShopItem[] items; // Array with shop items that can be bought
     private int[] ownedItems; // Array with number of own shop items
 
+    private bool tutorialGame1Done;
+    private bool tutorialGame2Done;
+    private bool realGame;
     public static bool win;  // True when player won the previous minigame
 
     int tutorialStage;  // From 1-9 = Tutorial, 10 = Done with tutorial
@@ -55,6 +58,14 @@ public class GameMenu : MonoBehaviour
     private Text Variables;
     private GameObject Stage1;
     private GameObject Stage2;
+    private GameObject Stage3;
+    private GameObject Stage4;
+    private GameObject Stage5;
+    private GameObject Stage6;
+    private GameObject Stage7;
+    private GameObject Stage8;
+    private GameObject Stage9;
+    private GameObject Stage10;
 
     public WindowScript Ws;
 
@@ -82,8 +93,11 @@ public class GameMenu : MonoBehaviour
         m = 1;
         b = 0;
         level = 0;
-        gameLevel = 1;
+        gameLevel = 0;
         win = false;
+        tutorialStage = 0;
+        tutorialGame1Done = false;
+        tutorialGame2Done = false;
 
         IncomeEquation = GameObject.Find("IncomeEquation").GetComponent<Text>();
         Bananas = GameObject.Find("BananaCount").GetComponent<Text>();
@@ -118,6 +132,14 @@ public class GameMenu : MonoBehaviour
         Variables = GameObject.Find("Variables").GetComponent<Text>();
         Stage1 = GameObject.Find("Stage1");
         Stage2 = GameObject.Find("Stage2");
+        Stage3 = GameObject.Find("Stage3");
+        Stage4 = GameObject.Find("Stage4");
+        Stage5 = GameObject.Find("Stage5");
+        Stage6 = GameObject.Find("Stage6");
+        Stage7 = GameObject.Find("Stage7");
+        Stage8 = GameObject.Find("Stage8");
+        Stage9 = GameObject.Find("Stage9");
+        Stage10 = GameObject.Find("Stage10");
 
         items = new ShopItem[3] {new ShopItem(), new ShopItem(), new ShopItem()};
         items[0].Cost = 1;
@@ -164,23 +186,97 @@ public class GameMenu : MonoBehaviour
         Ws.CreateLine(new Vector2(0, 50), new Vector2(200, 50), .65f);
         Ws.CreateLine(new Vector2(0, 100), new Vector2(200, 100), .65f);
         Ws.CreateLine(new Vector2(0, 150), new Vector2(200, 150), .65f);
+
+        Stage2.SetActive(false);
+        Stage3.SetActive(false);
+        Stage4.SetActive(false);
+        Stage5.SetActive(false);
+        Stage6.SetActive(false);
+        Stage7.SetActive(false);
+        Stage8.SetActive(false);
+        Stage9.SetActive(false);
+        Stage10.SetActive(false);
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
     void Update() 
     {  
-        if (m < 1 || b > 0) { return; }
+        if (tutorialStage == 1)
+        {
+            Stage1.SetActive(false);
+            Stage2.SetActive(true);
+        }
+        if (tutorialStage == 2)
+        {
+            Stage2.SetActive(false);
+            Stage3.SetActive(true);
+        }
+        if (tutorialStage == 3)
+        {
+            Stage3.SetActive(false);
+            Stage4.SetActive(true);
+        }
+        if (tutorialStage == 4)
+        {
+            Stage4.SetActive(false);
+            Stage5.SetActive(true);
+        }
+        if (tutorialStage == 5)
+        {
+            Stage5.SetActive(false);
+            Stage6.SetActive(true);
+        }
+        if (tutorialStage == 6)
+        {
+            tutorialGame1Done = true;
+            Stage6.SetActive(false);
+            Stage7.SetActive(true);
+        }
+        if (tutorialStage == 7)
+        {
+            tutorialGame2Done = true;
+            Stage7.SetActive(false);
+            Stage8.SetActive(true);
+        }
+        if (tutorialStage == 8)
+        {
+            Stage8.SetActive(false);
+            Stage9.SetActive(true);
+        }
+        if (tutorialStage == 9)
+        {
+            Stage9.SetActive(false);
+            Stage10.SetActive(true);
+        }
+        if (tutorialStage == 10)
+        {
+            Stage10.SetActive(false);
+        }
+
+        if (win && tutorialGame1Done)
+        {
+            tutorialGame1Done = false;
+            win = false;
+            tutorialStage++;
+        }
+
+        if (win && tutorialGame2Done)
+        {
+            y += m;
+            tutorialGame2Done = false;
+            win = false;
+            tutorialStage++;
+        }
 
         if (win)
         {
             y += m;
             win = false;
-        }
-
-        if (tutorialStage == 1)
-        {
-            Stage1.SetActive(false);
-            Stage2.SetActive(true);
         }
 
         string t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
@@ -257,8 +353,15 @@ public class GameMenu : MonoBehaviour
 
         t13 = "m = " + m + "   b = " + b;
         Variables.text = t13;
-
-        gameLevel = LevelDropdown.value;
+        
+        if (tutorialStage < 11)
+        {
+            gameLevel = 0;
+        }
+        else
+        {
+            gameLevel = LevelDropdown.value;
+        }
      }
 
     // Purchase the shop item at the given index (0, 1, 2) of the shop array
@@ -382,6 +485,8 @@ public class GameMenu : MonoBehaviour
     // Plays the minigame of this current level
     public void PlayGame()
     {
+        realGame = true;
+
         if (level == 0)
         {
 
@@ -403,6 +508,8 @@ public class GameMenu : MonoBehaviour
     // Plays the tutorial for the given minigame
     public void PlayTutorial()
     {
+        realGame = false;
+
         if (level == 0)
         {
 
