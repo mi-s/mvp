@@ -4790,9 +4790,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: Congratulations!  You've made your first banana.  Your bananas can be seen
-    in the number above.  Go ahead and buy your very first banana tree in the shop
-    to the right.
+  m_Text: 'Congratulations!  You''ve made your first banana.  Your bananas can be
+    seen in the number above.  Go ahead and buy your very first banana tree in the
+    shop to the right. (CS209: You have been given 500 bananas at the start for testing)'
 --- !u!222 &1228710638
 CanvasRenderer:
   m_ObjectHideFlags: 0

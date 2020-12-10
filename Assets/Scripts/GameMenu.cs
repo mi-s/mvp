@@ -89,7 +89,7 @@ public class GameMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        y = 1000;
+        y = 500;
         m = 1;
         b = 0;
         level = 0;
@@ -360,7 +360,7 @@ public class GameMenu : MonoBehaviour
         
         if (tutorialStage < 11)
         {
-            gameLevel = 2;
+            gameLevel = 0;
         }
         else
         {
@@ -493,19 +493,19 @@ public class GameMenu : MonoBehaviour
 
         if (gameLevel == 0)
         {
-            SceneManager.LoadScene("MazeMinigame");
+            SceneManager.LoadScene("MazeMinigame", LoadSceneMode.Additive);
         }
         else if (gameLevel == 1)
         {
-            SceneManager.LoadScene("MazeMinigame");
+            SceneManager.LoadScene("MazeMinigame", LoadSceneMode.Additive);
         }
         else if (gameLevel == 2)
         {
-            SceneManager.LoadScene("MachineMinigame");
+            SceneManager.LoadScene("MachineMinigame", LoadSceneMode.Additive);
         }
         else if (gameLevel == 3)
         {
-            SceneManager.LoadScene("MazeMinigame");
+            SceneManager.LoadScene("MazeMinigame", LoadSceneMode.Additive);
         }
     }
 
@@ -533,7 +533,7 @@ public class GameMenu : MonoBehaviour
     }
 
     public void IncreaseTutorialStage()
-    {
+    { 
         tutorialStage++;
     }
 }
